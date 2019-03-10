@@ -11,13 +11,16 @@ public class TourneyPicker {
 			String line;
 			ArrayList<String> stages = new ArrayList<String>(0);
 			ArrayList<String> used = new ArrayList<String>(0);
+			ArrayList<String> current = new ArrayList<String>(0);
 			int size = 0;
+			int length = 0;
 			try {
 				size = Integer.parseInt(args[0]);
 				FileReader fr = new FileReader(file);
 				BufferedReader br = new BufferedReader(fr);
 				while((line = br.readLine()) != null) {
 					stages.add(line);
+					length++;
 				}
 				br.close();
 			}
@@ -32,21 +35,23 @@ public class TourneyPicker {
 			}
 			System.out.println("Here are your " + args[0] + " stages\n");
 			for(int i = 0; i < size; i++) {
-				int num = (int)(Math.random() * 150);
+				int num = (int)(Math.random() * length);
 				String st = stages.get(num);
-				if(!used.contains(st)) {
+				if(!used.contains(st) && !current.contains(st)) {
 					System.out.println(st);
+					current.add(st);
 				}
 				else {
 					i--;
 				}
 			}
+			current.clear();
 			System.out.print("\nWhich stage was picked: ");
 			Scanner sc = new Scanner(System.in);
-			String pick = sc.next();
+			String pick = sc.nextLine();
 			used.add(pick);
 			System.out.print("\nPick again: ");
-			String again = sc.next();
+			String again = sc.nextLine();
 			if(again.equals("yes")) {
 				System.out.println("\n");
 				
