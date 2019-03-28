@@ -7,13 +7,13 @@ public class TourneyPicker {
 		boolean cont = true;
 		System.out.println("Welcome to Tourney Picker\n");
 		Scanner sc = new Scanner(System.in);
+		ArrayList<String> stages = new ArrayList<String>(0);
+		ArrayList<String> used = new ArrayList<String>(0);
+		ArrayList<String> current = new ArrayList<String>(0);
 		
 		while(cont) {
 			File file = new File("stages.txt");
 			String line;
-			ArrayList<String> stages = new ArrayList<String>(0);
-			ArrayList<String> used = new ArrayList<String>(0);
-			ArrayList<String> current = new ArrayList<String>(0);
 			int size = 0;
 			int length = 0;
 			
@@ -43,7 +43,7 @@ public class TourneyPicker {
 				int num = (int)(Math.random() * length);
 				String st = stages.get(num);
 				if(!used.contains(st) && !current.contains(st)) { //if stage was not already picked and not in current set
-					System.out.println(st);
+					System.out.println(i+1 + ". " + st);
 					current.add(st);
 				}
 				else {
