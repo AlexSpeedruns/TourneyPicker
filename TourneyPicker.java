@@ -10,6 +10,7 @@ public class TourneyPicker {
 		ArrayList<String> stages = new ArrayList<String>(0);
 		ArrayList<String> used = new ArrayList<String>(0);
 		ArrayList<String> current = new ArrayList<String>(0);
+		int count = 1;
 		
 		while(cont) {
 			File file = new File("stages.txt");
@@ -45,6 +46,9 @@ public class TourneyPicker {
 				if(!used.contains(st) && !current.contains(st)) { //if stage was not already picked and not in current set
 					System.out.println(i+1 + ". " + st);
 					current.add(st);
+					if(count == 1) {
+						used.add(st);
+					}
 				}
 				else {
 					i--;
@@ -53,15 +57,20 @@ public class TourneyPicker {
 			
 			current.clear(); //clear current set
 			
-			System.out.print("\nWhich stage was picked: ");
-			String pick = sc.nextLine();
-			used.add(pick); //adds to the list of already picked stages
+			if(count > 1) {	
+				System.out.print("\nWhich stage was striked: ");
+				String pick = sc.nextLine();
+				used.add(pick); //adds to the list of banned stages
+				System.out.print("\nWhich stage was picked: ");
+				pick = sc.nextLine();
+				used.add(pick);
+			}
 			
 			System.out.print("\nPick again: ");
 			String again = sc.nextLine();
 			if(again.equals("yes")) {
 				System.out.println();
-				
+				count++;
 			}
 			else {
 				cont = false;
