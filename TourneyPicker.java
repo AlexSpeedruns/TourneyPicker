@@ -12,31 +12,32 @@ public class TourneyPicker {
 		ArrayList<String> current = new ArrayList<String>(0);
 		int count = 1;
 		
-		while(cont) {
-			File file = new File("stages.txt");
-			String line;
-			int size = 0;
-			int length = 0;
+		File file = new File("stages.txt");
+		String line;
+		int size = 0;
+		int length = 0;
 			
-			try { //Puts file of stages into arraylist stages
-				size = Integer.parseInt(args[0]);
-				FileReader fr = new FileReader(file);
-				BufferedReader br = new BufferedReader(fr);
-				while((line = br.readLine()) != null) {
-					stages.add(line);
-					length++;
-				}
-				br.close();
+		try { //Puts file of stages into arraylist stages
+			size = Integer.parseInt(args[0]);
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			while((line = br.readLine()) != null) {
+				stages.add(line);
+				length++;
 			}
-			catch(FileNotFoundException e) {
+			br.close();
+		}
+		catch(FileNotFoundException e) {
 					
-			}
-			catch(IOException e) {
+		}
+		catch(IOException e) {
 					
-			}
-			catch(IllegalArgumentException e) { //args[0] is amount of stages to print, must be integer
+		}
+		catch(IllegalArgumentException e) { //args[0] is amount of stages to print, must be integer
 				System.out.println("Argument must be an integer");
-			}
+		}
+			
+		while(cont) {
 			
 			System.out.println("Here are your " + args[0] + " stages\n");
 
