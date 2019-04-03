@@ -32,7 +32,7 @@ Organic Form
 Reversible Gear
 Stepping Stones
 Dribbles
-U.R.L
+U.R.L.
 Mad Rings
 Curvy Options
 Twister
@@ -51,7 +51,7 @@ Arthropod
 Auto Doors
 Heavy Sphere
 Stagger
-U.F.O
+U.F.O.
 Ring Bridges
 Domes
 Amida Lot

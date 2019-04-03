@@ -11,14 +11,14 @@ public class TourneyPicker {
 		ArrayList<String> used = new ArrayList<String>(0);
 		ArrayList<String> current = new ArrayList<String>(0);
 		int count = 1;
+		boolean reshuffle = false;
+		boolean draw = false;
 		
 		File file = new File("stages.txt");
 		String line;
-		int size = 0;
 		int length = 0;
 			
 		try { //Puts file of stages into arraylist stages
-			size = Integer.parseInt(args[0]);
 			FileReader fr = new FileReader(file);
 			BufferedReader br = new BufferedReader(fr);
 			while((line = br.readLine()) != null) {
@@ -33,33 +33,59 @@ public class TourneyPicker {
 		catch(IOException e) {
 					
 		}
-		catch(IllegalArgumentException e) { //args[0] is amount of stages to print, must be integer
-				System.out.println("Argument must be an integer");
-		}
 			
 		while(cont) {
 			
-			System.out.println("Here are your " + args[0] + " stages\n");
+			while(true) {	
+				if(!reshuffle) {
+					System.out.println("Game " + count + "\n");
+				}
+				else {
+					System.out.println("Game " + count + " Reshuffle\n");
+				}
 
-			for(int i = 0; i < size; i++) {
-				int num = (int)(Math.random() * length);
-				String st = stages.get(num);
-				if(!used.contains(st) && !current.contains(st)) { //if stage was not already picked and not in current set
-					System.out.println(i+1 + ". " + st);
-					current.add(st);
-					if(count == 1) {
-						used.add(st);
+				for(int i = 0; i < 5; i++) {
+					int num = (int)(Math.random() * length);
+					String st = stages.get(num);
+					if(!used.contains(st) && !current.contains(st)) { //if stage was not already picked and not in current set
+						System.out.println(i+1 + ". " + st);
+						current.add(st);
+						if(count == 1 || draw) {
+							used.add(st);
+						}
+					}
+					else {
+						i--;
+					}
+				}
+				
+				if(!reshuffle) {
+					System.out.print("\nReshuffle? ");
+					String shuffle = sc.nextLine();
+					System.out.println();
+					if(shuffle.equals("yes")) {
+						reshuffle = true;
+						if(count > 1) {
+							for(int i = 0; i < current.size(); i++) {
+								used.add(current.get(i));
+							}
+						}
+					}
+					else {
+						break;
 					}
 				}
 				else {
-					i--;
+					System.out.println();
+					reshuffle = false;
+					break;
 				}
 			}
 			
 			current.clear(); //clear current set
 			
-			if(count > 1) {	
-				System.out.print("\nWhich stage was striked: ");
+			if(count > 1 && !draw && count < 8) {
+				System.out.print("\nWhich stage was banned: ");
 				String pick = sc.nextLine();
 				used.add(pick); //adds to the list of banned stages
 				System.out.print("\nWhich stage was picked: ");
@@ -67,11 +93,33 @@ public class TourneyPicker {
 				used.add(pick);
 			}
 			
-			System.out.print("\nPick again: ");
-			String again = sc.nextLine();
-			if(again.equals("yes")) {
+			if(count > 2 && count < 7) {	
+				System.out.print("\nGame " + (count+1) + "? ");
+				String again = sc.nextLine();
+				if(again.equals("yes")) {
+					System.out.println();
+					count++;
+					reshuffle = false;
+				}
+				else {
+					cont = false;
+				}
+			}
+			else {
 				System.out.println();
 				count++;
+			}
+			
+			if(count < 8) {
+				System.out.print("Draw? ");
+				String d = sc.nextLine();
+				if(d.equals("yes")) {
+					draw = true;
+				}
+				else {
+					draw = false;
+				}
+				System.out.println();
 			}
 			else {
 				cont = false;
